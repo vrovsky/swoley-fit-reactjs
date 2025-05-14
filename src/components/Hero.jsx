@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 export default function Hero() {
   return (
     <div className="min-h-screen text-center flex flex-col gap-10 justify-center items-center max-w-[900px] w-full mx-auto p-4">
@@ -18,9 +20,12 @@ export default function Hero() {
         </span>
         , afflicted with severe body dismorphia, unable to fit through doors.
       </p>
-      <button className="px-8 py-4 rounded-md border-[2px] bg-slate-950 border-blue-400 border-solid blueShadow duration-200">
-        <p>Accept & Begin</p>
-      </button>
+      <Button
+        func={() => {
+          window.location.href = "#generate";
+        }}
+        text={"Accept & Begin"}
+      />
     </div>
   );
 }

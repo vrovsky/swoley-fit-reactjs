@@ -1,6 +1,7 @@
 import SectionWrapper from "./SectionWrapper";
 import { SCHEMES, WORKOUTS } from "../utils/swoldier";
 import { useState } from "react";
+import Button from "./Button";
 
 function Header(props) {
   const { index, title, description } = props;
@@ -18,12 +19,17 @@ function Header(props) {
   );
 }
 
-export default function Generator() {
+export default function Generator(props) {
+  const {
+    poison,
+    setPoison,
+    muscles,
+    setMuscles,
+    goal,
+    setGoal,
+    updateWorkout,
+  } = props;
   const [showModal, setShowModal] = useState(false);
-  const [poison, setPoison] = useState("individual");
-  const [muscles, setMuscles] = useState([]);
-  const [goal, setGoal] = useState("strength_power");
-
   function toggleModal() {
     setShowModal(!showModal);
   }
@@ -33,7 +39,7 @@ export default function Generator() {
       setMuscles(muscles.filter((val) => val !== muscleGroup));
       return;
     }
-    if (muscles.length > 3) {
+    if (muscles.length > 2) {
       return;
     }
     if (poison != "individual") {
@@ -49,6 +55,7 @@ export default function Generator() {
   }
   return (
     <SectionWrapper
+      id={"generate"}
       header="generate your workout"
       title={["It's", "Huge", "o'clock"]}
     >
@@ -65,7 +72,7 @@ export default function Generator() {
                 setPoison(type);
               }}
               className={
-                "bg-slate-950 border border-blue-200 duration-200 hover:border-blue-400 py-3 rounded-lg" +
+                "bg-slate-950 border border-blue-200 duration-200 px-4 hover:border-blue-400 py-3 rounded-lg" +
                 (type === poison ? " border-blue-400 " : " border-blue-200 ")
               }
               key={typeIndex}
@@ -104,7 +111,7 @@ export default function Generator() {
                   }}
                   key={muscleGroupIndex}
                   className={
-                    "hover:text-blue-400 duration-200 " +
+                    "hover:text-blue-400 duration-200 px-4" +
                     (muscles.includes(muscleGroup) ? " text-blue-400" : " ")
                   }
                 >
@@ -123,7 +130,7 @@ export default function Generator() {
         title={"Become Juggernaut"}
         description={"Select your ultimate objective."}
       />
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {Object.keys(SCHEMES).map((scheme, schemeIndex) => {
           return (
             <button
@@ -131,7 +138,7 @@ export default function Generator() {
                 setGoal(scheme);
               }}
               className={
-                "bg-slate-950 border border-blue-200 duration-200 hover:border-blue-400 py-3 rounded-lg" +
+                "bg-slate-950 border border-blue-200 duration-200 px-4 hover:border-blue-400 py-3 rounded-lg" +
                 (scheme === goal ? " border-blue-400 " : " border-blue-200 ")
               }
               key={schemeIndex}
@@ -141,6 +148,7 @@ export default function Generator() {
           );
         })}
       </div>
+      <Button func={updateWorkout} text={"Formulate"} />
     </SectionWrapper>
   );
 }
